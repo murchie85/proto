@@ -60,7 +60,7 @@ pipeline {
             steps {
                 echo "Code Coverage"
                 sh  ''' source activate ${BUILD_TAG}
-                        coverage run testTargets/main.py 1 1 2 3
+                        coverage run testTargets/main.python
                         python -m coverage xml -o ./reports/coverage.xml
                     '''
             }
