@@ -16,5 +16,5 @@ Radon==2.1.1
 pytest==3.5.1
 pytest-runner==4.2
 pytest-cov==2.5.1
-behave==1.2.6
-allure-behave-2.5.5
+
+#behave==1.2.6

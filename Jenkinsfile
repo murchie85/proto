@@ -51,16 +51,6 @@ pipeline {
                     '''
             }
         }
-        stage('integration tests') {
-            steps {
-                sh  ''' source activate ${BUILD_TAG}
-
-                        $ behave -f allure_behave.formatter:AllureFormatter -o "/Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults"./features
-                        echo 'report location'
-                        ls -alh
-                    '''
-            }
-        }
         stage('Static code metrics') {
             steps {
                 echo "Raw metrics"
