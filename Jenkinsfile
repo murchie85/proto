@@ -17,13 +17,14 @@ pipeline {
     stages {
 
         stage ("Code pull"){
-            // Pulls code down from repo to local Jenkins work directory
+            echo "Pulls code down from repo to local Jenkins work directory"
             steps{
                 checkout scm
             }
         }
         stage('Build environment') {
-            // Pulls code down from repo to local Jenkins work directory
+            echo "BUILD ENVIRONMENT"
+            echo "CREATE, INSTALL CONDA THEN PIP DEPENDENCIES"
             steps {
                 sh '''conda create --yes -n ${BUILD_TAG} python
                       source activate ${BUILD_TAG} 
