@@ -54,10 +54,10 @@ pipeline {
         stage('integration tests') {
             steps {
                 sh  ''' source activate ${BUILD_TAG}
-                        behave -f=json.pretty -o reports/integration.json
+                        behave -f=json.pretty -o integration.json
                         echo 'report location'
                         ls -alh
-                        python -i behave2cucumber reports/integration.json || true
+                        python -m behave2cucumber integration.json || true
                     '''
             }
             post {
