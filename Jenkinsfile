@@ -101,6 +101,21 @@ pipeline {
                 }
             }
         }
+        stage('integration tests') {
+            steps {
+                sh  ''' source activate ${BUILD_TAG}
+                        behave -f=formatters.cucumber_json:PrettyCucumberJSONFormatter -o ./reports/integration.json
+                    '''
+            }
+            post {
+                always {
+                    cucumber (fileIncludePattern: '**/integration*.json',
+                              jsonReportDirectory: './reports/',
+                              parallelTesting: true,
+                              sortingMethod: 'ALPHABETICAL')
+                }
+            }
+        }
         stage('Pylint Tests') {
             steps {
                 echo "PEP8 style check"
