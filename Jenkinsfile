@@ -95,7 +95,7 @@ pipeline {
             post {
                 always {
                     // Archive unit tests for the future
-                    junit allowEmptyResults: true, Fingerprint: true, testResults: 'test-reports/results.xml'
+                    junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
                 }
             }
         }
