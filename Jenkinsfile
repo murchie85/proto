@@ -55,12 +55,14 @@ pipeline {
             steps {
                 sh  ''' source activate ${BUILD_TAG}
                         behave -f=json.pretty -o reports/integration.json
-                        python -m behave2cucumber reports/integration.json
+                        echo 'report location'
+                        ls -alh
+                        python -m behave2cucumber reports/integration.json || true
                     '''
             }
             post {
                 always {
-                    cucumber (fileIncludePattern: '**/integration*.json',
+                    cucumber (fileIncludePattern: 'reports/*.json',
                               jsonReportDirectory: 'reports/',
                               sortingMethod: 'ALPHABETICAL')
                 }
