@@ -56,7 +56,7 @@ pipeline {
                     '''
             }
         }
-        stage('Static code metrics') {
+        stage('Static code Coverage') {
             steps {
                 echo "Code Coverage"
                 sh  ''' source activate ${BUILD_TAG}
