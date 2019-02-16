@@ -89,7 +89,7 @@ pipeline {
         stage('Unit tests') {
             steps {
                 sh  ''' source activate ${BUILD_TAG}
-                        python -m pytest --verbose --junit-xml test-reports/results.xml
+                        python -m pytest --verbose --junit-xml test-reports/results.xml || true
                     '''
             }
             post {
