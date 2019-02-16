@@ -28,7 +28,7 @@ pipeline {
 
                       echo '*****CONDA INSTALL*****'
                       conda install --name ${BUILD_TAG}  --file requirements.txt -y
-                      
+
                       echo '*****PIP INSTALL*****'
                       pip install -r piprequirements.txt
                     '''
@@ -40,6 +40,9 @@ pipeline {
                       pip list
                       which pip
                       which python
+
+                      echo 'LISTING ALL INSTALLED PACKAGES : '
+                      conda list
                     '''
             }
         }
@@ -51,6 +54,30 @@ pipeline {
                         radon cc --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/cc_report.json
                         radon mi --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/mi_report.json
                     '''
+            }
+        }
+        stage('Static code metrics') {
+            steps {
+                echo "Code Coverage"
+                sh  ''' source activate ${BUILD_TAG}
+                        coverage run testTargets/ 1 1 2 3
+                        python -m coverage xml -o ./reports/coverage.xml
+                    '''
+            }
+            post{
+                always{
+                    step([$class: 'CoberturaPublisher',
+                                   autoUpdateHealth: false,
+                                   autoUpdateStability: false,
+                                   coberturaReportFile: 'reports/coverage.xml',
+                                   failNoReports: false,
+                                   failUnhealthy: false,
+                                   failUnstable: false,
+                                   maxNumberOfBuilds: 10,
+                                   onlyStable: false,
+                                   sourceEncoding: 'ASCII',
+                                   zoomCoverageChart: false])
+                }
             }
         }
     }
