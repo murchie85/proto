@@ -57,7 +57,6 @@ pipeline {
                         behave -f=json.pretty -o integration.json
                         echo 'report location'
                         ls -alh
-                        cd reports
                         python -i behave2cucumber integration.json || true
                     '''
             }
