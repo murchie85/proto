@@ -90,9 +90,8 @@ pipeline {
             steps {
                 sh  ''' source activate ${BUILD_TAG}
                         python -m pytest --verbose --junit-xml 'results/results.xml' || true
-                        
+
                         echo 'copying to workplace'
-                        cp /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/results.xml $WORKSPACE
                         ls -alh
                     '''
             }
