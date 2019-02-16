@@ -17,11 +17,13 @@ pipeline {
     stages {
 
         stage ("Code pull"){
+            // Pulls code down from repo to local Jenkins work directory
             steps{
                 checkout scm
             }
         }
         stage('Build environment') {
+            echo "Creating Conda Environment and Installing Pip & Conda Packages"
             steps {
                 sh '''conda create --yes -n ${BUILD_TAG} python
                       source activate ${BUILD_TAG} 
@@ -34,9 +36,11 @@ pipeline {
                     '''
             }
         }
-        stage('Test environment & pull metrics') {
+        stage('Test environment') {
+            echo "Checking environment attributes"
             steps {
                 sh '''source activate ${BUILD_TAG} 
+                      echo 'list installs , which pip? , which python?'
                       pip list
                       which pip
                       which python
