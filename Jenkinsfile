@@ -81,6 +81,14 @@ pipeline {
                 }
             }
         }
+        stage('Pylint Tests') {
+            steps {
+                echo "PEP8 style check"
+                sh  ''' source activate ${BUILD_TAG}
+                        pylint --disable=C testTargets || true
+                    '''
+            }
+        }
     }
     post {
         always {
