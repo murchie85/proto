@@ -50,9 +50,9 @@ pipeline {
             steps {
                 echo "Raw metrics"
                 sh  ''' source activate ${BUILD_TAG}
-                        radon raw --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/raw_report.json
-                        radon cc --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/cc_report.json
-                        radon mi --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/mi_report.json
+                        radon raw --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/raw_report.json
+                        radon cc --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/cc_report.json
+                        radon mi --json testTargets/ > /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/mi_report.json
                     '''
             }
         }
