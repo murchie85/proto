@@ -25,7 +25,8 @@ pipeline {
             steps {
                 sh '''conda create --yes -n ${BUILD_TAG} python
                       source activate ${BUILD_TAG} 
-                      pip install -r requirements.txt
+                      conda install --name ${BUILD_TAG}  --file requirements.txt
+                      #pip install -r requirements.txt
                     '''
             }
         }
