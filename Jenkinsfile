@@ -89,14 +89,16 @@ pipeline {
         stage('Unit tests') {
             steps {
                 sh  ''' source activate ${BUILD_TAG}
-                        python -m pytest --verbose --junit-xml /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/results.xml || true
+                        python -m pytest --verbose --junit-xml 'results/results.xml' || true
+                        
+                        echo 'copying to workplace'
+                        cp /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/results.xml $WORKSPACE
+                        ls -alh
                     '''
             }
             post {
                 always {
-                    // Archive unit tests for the future
-                    //junit allowEmptyResults: true, testResults: '/Users/adammcmurchie/projects/Jenkins-//Stuff/proto/testresults/results.xml'
-                    junit '/Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/results.xml'
+                    junit 'results/results.xml'
                 }
             }
         }
