@@ -54,18 +54,11 @@ pipeline {
         stage('integration tests') {
             steps {
                 sh  ''' source activate ${BUILD_TAG}
-                        behave -f=json.pretty -o integration.json
+
+                        $ behave -f allure_behave.formatter:AllureFormatter -o "/Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults"./features
                         echo 'report location'
                         ls -alh
-                        python -i behave2cucumber integration.json || true
                     '''
-            }
-            post {
-                always {
-                    cucumber (fileIncludePattern: 'reports/*.json',
-                              jsonReportDirectory: 'reports/',
-                              sortingMethod: 'ALPHABETICAL')
-                }
             }
         }
         stage('Static code metrics') {
