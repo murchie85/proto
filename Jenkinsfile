@@ -111,7 +111,6 @@ pipeline {
                 always {
                     cucumber (fileIncludePattern: '**/integration*.json',
                               jsonReportDirectory: './reports/',
-                              parallelTesting: true,
                               sortingMethod: 'ALPHABETICAL')
                 }
             }
