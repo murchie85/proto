@@ -92,12 +92,7 @@ pipeline {
                         python -m pytest --verbose --junit-xml /Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/results.xml || true
                     '''
             }
-            post {
-                always {
-                    // Archive unit tests for the future
-                    junit allowEmptyResults: true, testResults: '/Users/adammcmurchie/projects/Jenkins-Stuff/proto/testresults/results.xml'
-                }
-            }
+
         }
         stage('Pylint Tests') {
             steps {
