@@ -51,6 +51,21 @@ pipeline {
                     '''
             }
         }
+        stage('integration tests') {
+            steps {
+                sh  ''' source activate ${BUILD_TAG}
+                        behave -f=json.pretty -o ./reports/integration.json
+                        python -m behave2cucumber ./reports/integration.json
+                    '''
+            }
+            post {
+                always {
+                    cucumber (fileIncludePattern: '**/integration*.json',
+                              jsonReportDirectory: './reports/',
+                              sortingMethod: 'ALPHABETICAL')
+                }
+            }
+        }
         stage('Static code metrics') {
             steps {
                 echo "Raw metrics"
@@ -98,20 +113,6 @@ pipeline {
             post {
                 always {
                     junit 'results/results.xml'
-                }
-            }
-        }
-        stage('integration tests') {
-            steps {
-                sh  ''' source activate ${BUILD_TAG}
-                        behave -f=formatters.cucumber_json:PrettyCucumberJSONFormatter -o ./reports/integration.json
-                    '''
-            }
-            post {
-                always {
-                    cucumber (fileIncludePattern: '**/integration*.json',
-                              jsonReportDirectory: './reports/',
-                              sortingMethod: 'ALPHABETICAL')
                 }
             }
         }
