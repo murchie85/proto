@@ -91,7 +91,7 @@ pipeline {
                 sh  ''' source activate ${BUILD_TAG}
                         python -m pytest --verbose --junit-xml 'results/results.xml' || true
 
-                        echo 'copying to workplace'
+                        echo 'Checking directory for reporty'
                         ls -alh
                     '''
             }
