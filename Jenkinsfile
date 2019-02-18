@@ -16,7 +16,7 @@ pipeline {
 
     stages {
 
-        stage ("Code pull"){
+        stage ("Git Checkout"){
             
             steps{
                 echo "Pulls code down from repo to local Jenkins work directory"
@@ -39,9 +39,13 @@ pipeline {
                     '''
             }
         }
-        stage('Test environment & pull metrics') {
+        stage('Test environment) {
+            when {
+                    expression { return readFile('control.txt').contains('ENVTEST:Y') }
+                  }
             steps {
                 sh '''source activate ${BUILD_TAG} 
+                      pip freeze
                       pip list
                       which pip
                       which python
