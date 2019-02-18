@@ -17,6 +17,9 @@ pipeline {
     stages {
 
         stage('Deploy') {
+              when {
+                    expression { return readFile('controlme.txt').contains('MANUALTRIGGER:Y') }
+                  }
              input {
                      message "Should we continue?"
                     }
