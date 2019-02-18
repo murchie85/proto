@@ -39,7 +39,7 @@ pipeline {
                     '''
             }
         }
-        stage('Test environment) {
+        stage('Test environment') {
             when {
                     expression { return readFile('control.txt').contains('ENVTEST:Y') }
                   }
