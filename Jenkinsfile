@@ -14,8 +14,13 @@ pipeline {
       PATH="/users/shared/jenkins/miniconda3/bin:$PATH"
     }
 
-    stages {
-
+        stage('Deploy') {
+              input {
+                 message "Should we continue?"
+                     }
+              steps {
+                     echo "Continuing with deployment"
+                   }
         stage ("Git Checkout"){
             
             steps{
