@@ -56,6 +56,9 @@ pipeline {
             }
         }
         stage('Static code metrics') {
+            when {
+                    expression { return readFile('controlme.txt').contains('STATICTEST:Y') }
+                  }
             steps {
                 echo "Raw metrics"
                 sh  ''' source activate ${BUILD_TAG}
@@ -66,6 +69,9 @@ pipeline {
             }
         }
         stage('Static code Coverage') {
+            when {
+                    expression { return readFile('controlme.txt').contains('COVERAGE:Y') }
+                  }
             steps {
                 echo "Code Coverage"
                 sh  ''' source activate ${BUILD_TAG}
@@ -91,6 +97,9 @@ pipeline {
             }
         }
         stage('Unit tests') {
+            when {
+                    expression { return readFile('controlme.txt').contains('UNITTEST:Y') }
+                  }
             steps {
                 sh  ''' source activate ${BUILD_TAG}
                         python -m pytest --verbose --junit-xml 'results/results.xml' || true
@@ -106,6 +115,9 @@ pipeline {
             }
         }
         stage('Pylint Tests') {
+            when {
+                    expression { return readFile('controlme.txt').contains('PYLINT:Y') }
+                  }
             steps {
                 echo "PEP8 style check"
                 sh  ''' source activate ${BUILD_TAG}
