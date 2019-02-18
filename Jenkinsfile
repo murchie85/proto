@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Test environment') {
             when {
-                    expression { return readFile('control.txt').contains('ENVTEST:Y') }
+                    expression { return readFile('controlme.txt').contains('ENVTEST:Y') }
                   }
             steps {
                 sh '''source activate ${BUILD_TAG} 
